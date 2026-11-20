@@ -6,14 +6,17 @@
 3. **Project Settings → API**: копирай **Project URL** и **anon public key**.
 4. Отвори `index.html` и замени `PASTE_PROJECT_URL` и `PASTE_ANON_PUBLIC_KEY` (в реда под "SETTINGS").
 
-## 2. Първи админ
+## 1б. Допълнителни SQL файлове
+Пусни по ред `update1.sql` и `update2.sql` (SQL Editor, New query, Run). `update2.sql` въвежда ролята IT, екипа, блога и статистиките.
+
+## 2. Първи IT потребител
 1. **Authentication → Users → Add user**: въведи имейл и парола (ще е входът ти).
 2. Копирай ID-то на потребителя и в **SQL Editor** пусни:
-   `insert into profiles(id,name,role) values('ТВОЕТО-ID','Име','admin');`
+   `insert into profiles(id,name,role) values('ТВОЕТО-ID','Име','it');`
 3. За мениджър или служител: същото, с `'manager'` или `'staff'`.
 
 ## 3. GitHub Pages
-1. В github.com направи **публично** хранилище (напр. `impas-tt`) и качи съдържанието на папката (`index.html` и `assets`).
+1. В github.com направи **публично** хранилище (напр. `impas-tt`) и качи съдържанието на папката (`index.html`, всичко е вътре, няма друга папка).
 2. **Settings → Pages → Branch: main, папка / (root) → Save**.
 3. След минута сайтът е на `https://ПОТРЕБИТЕЛ.github.io/impas-tt/`.
 

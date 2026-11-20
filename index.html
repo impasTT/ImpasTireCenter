@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="bg"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Impas TT – Център за гуми, Бургас</title>
+<link rel="icon" href="assets/favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#161412;--sf:#221f1b;--ln:#3a352e;--tx:#f1ece4;--mu:#a69d90;--am:#e5a91f;--ok:#6fbf73;--er:#e0675a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 "Trebuchet MS",Verdana,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--ln)}
+header img{height:44px}.bar{display:flex;gap:8px}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:var(--am);color:#1b1407;border:0;border-radius:6px;padding:10px 16px;font-weight:700;cursor:pointer}
+button.g{background:transparent;color:var(--tx);border:1px solid var(--ln)}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--am);outline-offset:2px}
+main{max-width:920px;margin:0 auto;padding:0 18px 60px}section{margin-top:34px}
+h1{font-size:clamp(28px,6vw,46px);line-height:1.1;margin:30px 0 8px;font-family:Georgia,serif}h2{font-size:22px;margin:0 0 12px;font-family:Georgia,serif}
+.mu{color:var(--mu)}.note{font-size:14px;color:var(--mu)}.box{background:var(--sf);border:1px solid var(--ln);border-radius:8px;padding:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:700px){.two{grid-template-columns:1fr}}
+iframe{width:100%;height:260px;border:0;border-radius:8px}
+label{display:block;margin:10px 0 4px;font-size:14px;color:var(--mu)}
+input,select,textarea{width:100%;background:#15130f;border:1px solid var(--ln);border-radius:6px;padding:10px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px}.cal b{text-align:center;font-size:12px;color:var(--mu)}
+.cal button{background:var(--sf);color:var(--tx);padding:10px 0;font-weight:400}.cal button:disabled{opacity:.25;cursor:default}.cal button.on{background:var(--am);color:#1b1407;font-weight:700}
+.slots{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.slots button{background:var(--sf);color:var(--tx);border:1px solid var(--ln)}.slots button.on{background:var(--am);color:#1b1407}
+.msg{padding:12px;border-radius:6px;margin-top:12px}.msg.e{background:#3a1f1b;color:#ffb4aa}.msg.o{background:#1d2e1e;color:#b9e6bc}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid var(--ln);text-align:left;font-size:14px}
+.hide{display:none}body.mv #pub>h1,body.mv #pub>.mu,body.mv #pub>.two,body.mv #privacy,body.mv #book>h2,body.mv #svc,body.mv #tw,body.mv #form,body.mv #book .box>label:first-child{display:none}
+</style></head><body>
+<header><img id="logo" src="assets/logo-dark.png" alt="Impas">
+<div class="bar"><button class="g" id="lang">EN</button><button class="g" id="loginBtn" data-i="login"></button></div></header>
+<main>
+<div id="pub">
+<h1 data-i="h1"></h1><p class="mu" data-i="sub"></p>
+<section class="two"><div class="box"><h2 data-i="info"></h2>
+<p>📍 бул. „Захари Стоянов“, 8011 Бургас</p><p>📞 <a style="color:var(--am)" href="tel:+359887102219">+359 88 710 2219</a></p>
+<table><tr><td data-i="mf"></td><td>08:00–18:00</td></tr><tr><td data-i="sat"></td><td>08:00–14:00</td></tr><tr><td data-i="sun"></td><td data-i="closed"></td></tr></table>
+<p class="note" data-i="amen"></p></div>
+<iframe loading="lazy" title="map" src="https://www.google.com/maps?q=ИМПАС+ТТ+бул.+Захари+Стоянов+Бургас&output=embed"></iframe></section>
+
+<section id="book"><h2 data-i="book"></h2><div class="box">
+<label data-i="svc"></label><select id="svc"></select>
+<div id="tw"><label data-i="tires"></label><select id="tires"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+<label data-i="day"></label><div id="mhead" style="display:flex;justify-content:space-between;align-items:center"><button class="g" id="pm">‹</button><b id="mt"></b><button class="g" id="nm">›</button></div>
+<div class="cal" id="cal"></div><div class="slots" id="slots"></div><p class="note" data-i="approx"></p>
+<div id="form" class="hide"><label data-i="name"></label><input id="name" autocomplete="name"><label data-i="phone"></label><input id="phone" type="tel" autocomplete="tel">
+<label data-i="email"></label><input id="email" type="email" autocomplete="email"><label data-i="car"></label><input id="car"><label data-i="comment"></label><textarea id="comment" rows="2"></textarea>
+<label style="display:flex;gap:8px;align-items:center;color:var(--tx)"><input id="gdpr" type="checkbox" style="width:auto"><span><span data-i="agree"></span> <a href="#privacy" style="color:var(--am)" data-i="privacy"></a></span></label>
+<p><button id="go" data-i="confirm"></button></p></div><div id="res"></div></div></section>
+
+<section id="privacy" class="box"><h2 data-i="privacy"></h2><p class="note" data-i="ptext"></p></section>
+</div>
+
+<div id="manage" class="hide"><h1 data-i="mine"></h1><div class="box" id="mbox"></div></div>
+
+<div id="staff" class="hide"><div id="lg" class="box" style="max-width:380px;margin:30px auto"><h2 data-i="login"></h2>
+<label>Email</label><input id="le" type="email"><label data-i="pass"></label><input id="lp" type="password"><p><button id="lgo" data-i="login"></button> <button class="g" id="back" data-i="back"></button></p><div id="lerr"></div></div>
+<div id="panel" class="hide"><h1 data-i="panel"></h1><p><input type="date" id="pd" style="width:auto"> <button class="g" id="out" data-i="logout"></button></p>
+<div class="box" style="overflow-x:auto"><table id="list"></table></div>
+<section id="cl" class="hide"><h2 data-i="blk"></h2><div class="box" style="overflow-x:auto"><table id="clt"></table></div></section></div></div>
+</main>
+<script>
+// ===== SETTINGS: paste your values from Supabase > Project Settings > API =====
+const SUPABASE_URL="PASTE_PROJECT_URL", SUPABASE_KEY="PASTE_ANON_PUBLIC_KEY";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const T={bg:{login:"Вход",h1:"Запиши час за гуми онлайн",sub:"Смяна и ремонт на гуми, 3D геометрия. Без регистрация.",info:"Impas TT",mf:"Пон–Пет",sat:"Събота",sun:"Неделя",closed:"Затворено",amen:"Удобства: тоалетна, вендинг автомат",book:"Запази час",svc:"Услуга",tires:"Брой гуми",day:"Избери ден и час",approx:"Часовете са ориентировъчни. Възможно е леко разминаване.",name:"Име",phone:"Телефон",email:"Имейл",car:"Марка и модел (по желание)",comment:"Коментар (по желание)",agree:"Съгласен съм с",privacy:"Политика за поверителност",confirm:"Потвърди часа",ptext:"Събираме име, телефон и имейл само за да управляваме записаните часове и да ви пращаме потвърждение и напомняния. Данните се пазят 15 месеца след последния час и после се изтриват автоматично. За изтриване по-рано се обадете на +359 88 710 2219.",mine:"Моят час",back:"Назад",pass:"Парола",panel:"Записани часове",logout:"Изход",blk:"Блокирани клиенти",full:"Няма свободни часове този ден.",pick:"Избери час и попълни данните.",need:"Попълни име, телефон, имейл и приеми политиката.",taken:"Часът току-що е зает. Избери друг.",blocked:"Блокирани сте от системата. Обадете се на +359 88 710 2219.",done:"Часът е записан! Запази линка за отмяна или промяна:",spam:"Ако не виждаш имейла, провери папка Спам.",cancel:"Отмени часа",move:"Премести",cdone:"Часът е отменен.",moved:"Часът е преместен.",bad:"Грешен или изтекъл линк.",unb:"Отблокирай",ok:"Изпълнен",ns:"Неявил се",st:{booked:"Записан",done:"Изпълнен",noshow:"Неявил се",cancelled:"Отменен"},e:"Грешка при вход."},
+en:{login:"Staff login",h1:"Book your tire appointment online",sub:"Tire change and repair, 3D alignment. No registration needed.",info:"Impas TT",mf:"Mon–Fri",sat:"Saturday",sun:"Sunday",closed:"Closed",amen:"Amenities: restroom, vending machine",book:"Book a time",svc:"Service",tires:"Number of tires",day:"Pick a day and time",approx:"Times are approximate. Small delays are possible.",name:"Name",phone:"Phone",email:"Email",car:"Car make and model (optional)",comment:"Comment (optional)",agree:"I agree to the",privacy:"Privacy policy",confirm:"Confirm booking",ptext:"We collect your name, phone and email only to manage appointments and send confirmations and reminders. Data is kept for 15 months after your last appointment, then deleted automatically. To delete it sooner, call +359 88 710 2219.",mine:"My appointment",back:"Back",pass:"Password",panel:"Appointments",logout:"Log out",blk:"Blocked clients",full:"No free times this day.",pick:"Pick a time and fill in your details.",need:"Fill in name, phone, email and accept the policy.",taken:"That time was just taken. Pick another.",blocked:"You are blocked from booking. Call +359 88 710 2219.",done:"Booked! Save this link to cancel or move your appointment:",spam:"If you don't see the email, check Spam.",cancel:"Cancel appointment",move:"Move",cdone:"Appointment cancelled.",moved:"Appointment moved.",bad:"Invalid or expired link.",unb:"Unblock",ok:"Done",ns:"No-show",st:{booked:"Booked",done:"Done",noshow:"No-show",cancelled:"Cancelled"},e:"Login failed."}};
+let L=localStorage.lang||"bg",svcs=[],day=null,slot=null,view=new Date(),mode="new",tok=null;
+const $=i=>document.getElementById(i),tt=k=>T[L][k];
+const fmt=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+function i18n(){document.documentElement.lang=L;$("lang").textContent=L=="bg"?"EN":"BG";document.querySelectorAll("[data-i]").forEach(e=>e.textContent=tt(e.dataset.i));fillSvc();cal()}
+function fillSvc(){const v=$("svc").value;$("svc").innerHTML=svcs.map(s=>`<option value="${s.id}">${L=="bg"?s.name_bg:s.name_en} (~${s.minutes} ${L=="bg"?"мин.":"min"})</option>`).join("");if(v)$("svc").value=v;$("tw").classList.toggle("hide",!cur()?.tires_choice)}
+const cur=()=>svcs.find(s=>s.id==$("svc").value);
+$("lang").onclick=()=>{L=L=="bg"?"en":"bg";localStorage.lang=L;i18n()};
+async function cal(){const y=view.getFullYear(),m=view.getMonth();$("mt").textContent=view.toLocaleDateString(L=="bg"?"bg-BG":"en-GB",{month:"long",year:"numeric"});
+ const first=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate(),now=new Date(),max=new Date();max.setDate(max.getDate()+30);
+ let h=(L=="bg"?["П","В","С","Ч","П","С","Н"]:["M","T","W","T","F","S","S"]).map(x=>`<b>${x}</b>`).join("")+"<span></span>".repeat(first);
+ for(let d=1;d<=n;d++){const dt=new Date(y,m,d),off=dt<new Date(now.getFullYear(),now.getMonth(),now.getDate())||dt>max||dt.getDay()==0;h+=`<button ${off?"disabled":""} class="${fmt(dt)==day?"on":""}" data-d="${fmt(dt)}">${d}</button>`}
+ $("cal").innerHTML=h;$("cal").querySelectorAll("button:not([disabled])").forEach(b=>b.onclick=()=>{day=b.dataset.d;slot=null;cal();slots()})}
+$("pm").onclick=()=>{view.setMonth(view.getMonth()-1);cal()};$("nm").onclick=()=>{view.setMonth(view.getMonth()+1);cal()};
+async function slots(){if(!day)return;const sid=mode=="move"?svcOf:+$("svc").value;const{data}=await sb.rpc("get_slots",{p_day:day,p_service:sid});
+ $("slots").innerHTML=data?.length?data.map(s=>`<button data-s="${s.slot}" class="${s.slot==slot?"on":""}">${s.slot.slice(0,5)}</button>`).join(""):`<span class="note">${tt("full")}</span>`;
+ $("slots").querySelectorAll("button").forEach(b=>b.onclick=()=>{slot=b.dataset.s;slots();if(mode=="new")$("form").classList.remove("hide");else moveGo()})}
+$("svc").onchange=()=>{fillSvc();slot=null;slots()};
+function msg(c,t){$("res").innerHTML=`<div class="msg ${c}">${t}</div>`}
+$("go").onclick=async()=>{const v=k=>$(k).value.trim();
+ if(!slot)return msg("e",tt("pick"));if(!v("name")||!v("phone")||!/\S+@\S+\.\S+/.test(v("email"))||!$("gdpr").checked)return msg("e",tt("need"));
+ const{data,error}=await sb.rpc("book",{p_service:+$("svc").value,p_tires:cur().tires_choice?+$("tires").value:null,p_day:day,p_slot:slot,p_name:v("name"),p_phone:v("phone"),p_email:v("email"),p_car:v("car"),p_comment:v("comment")});
+ if(error||data.error)return msg("e",tt(data?.error||"taken"));
+ const link=location.origin+location.pathname+"?t="+data.token;msg("o",`${tt("done")}<br><a style="color:var(--am);word-break:break-all" href="${link}">${link}</a><br>${tt("spam")}`);$("form").classList.add("hide");slot=null;slots()};
+// ----- manage via personal link -----
+let svcOf=null;
+async function manage(t){tok=t;document.body.classList.add("mv");$("manage").classList.remove("hide");mode="move";
+ const{data}=await sb.rpc("get_booking",{p_token:t});if(!data||data.status!="booked"){$("mbox").innerHTML=`<p>${tt("bad")}</p>`;$("pub").classList.add("hide");return}
+ svcOf=data.service_id;$("mbox").innerHTML=`<p><b>${L=="bg"?data.name_bg:data.name_en}</b><br>${data.day} ${data.slot.slice(0,5)}</p><button class="g" id="cx">${tt("cancel")}</button><h2 style="margin:20px 0 0">${tt("move")}</h2>`;
+ $("cx").onclick=async()=>{await sb.rpc("cancel_booking",{p_token:tok});$("mbox").innerHTML=`<p>${tt("cdone")}</p>`;$("pub").classList.add("hide")};cal()}
+async function moveGo(){const{data}=await sb.rpc("move_booking",{p_token:tok,p_day:day,p_slot:slot});if(data?.error)return slots();$("mbox").innerHTML=`<p>${tt("moved")} ${day} ${slot.slice(0,5)}</p>`;$("pub").classList.add("hide")}
+// ----- staff -----
+$("loginBtn").onclick=()=>{$("pub").classList.add("hide");$("staff").classList.remove("hide")};$("back").onclick=()=>location.reload();
+$("lgo").onclick=async()=>{const{error}=await sb.auth.signInWithPassword({email:$("le").value,password:$("lp").value});if(error)$("lerr").innerHTML=`<div class="msg e">${tt("e")}</div>`;else panel()};
+$("out").onclick=async()=>{await sb.auth.signOut();location.reload()};
+async function panel(){const{data:{session}}=await sb.auth.getSession();if(!session)return;$("lg").classList.add("hide");$("panel").classList.remove("hide");$("pd").value||($("pd").value=fmt(new Date()));
+ const{data:me}=await sb.from("profiles").select("role").eq("id",session.user.id).single();window.role=me?.role;load()}
+$("pd").onchange=()=>load();
+async function load(){const{data}=await sb.from("bookings").select("*,services(name_bg,name_en)").eq("day",$("pd").value).order("slot");
+ $("list").innerHTML=(data||[]).map(b=>`<tr><td>${b.slot.slice(0,5)}</td><td>${L=="bg"?b.services.name_bg:b.services.name_en}${b.tires?" ×"+b.tires:""}</td><td>${b.name}<br><a style="color:var(--am)" href="tel:${b.phone}">${b.phone}</a></td><td>${b.car||""}<br><span class="note">${b.comment||""}</span></td><td>${tt("st")[b.status]}</td><td>${b.status=="booked"?`<button data-i2="${b.id}" data-s="done">${tt("ok")}</button> <button class="g" data-i2="${b.id}" data-s="noshow">${tt("ns")}</button> <button class="g" data-i2="${b.id}" data-s="cancelled">✕</button>`:""}</td></tr>`).join("");
+ $("list").querySelectorAll("button").forEach(b=>b.onclick=async()=>{await sb.from("bookings").update({status:b.dataset.s}).eq("id",b.dataset.i2);load()});
+ if(["admin","manager"].includes(window.role)){$("cl").classList.remove("hide");const{data:c}=await sb.from("clients").select("*").gt("strikes",0).order("strikes",{ascending:false});
+  $("clt").innerHTML=(c||[]).map(x=>`<tr><td>${x.email}<br>${x.phone||""}</td><td>${x.strikes}/5</td><td>${x.blocked?`<button data-e="${x.email}">${tt("unb")}</button>`:""}</td></tr>`).join("");
+  $("clt").querySelectorAll("button").forEach(b=>b.onclick=async()=>{await sb.from("clients").update({strikes:0,blocked:false}).eq("email",b.dataset.e);load()})}}
+// ----- start -----
+(async()=>{const{data}=await sb.from("services").select("*").eq("active",true).order("sort");svcs=data||[];i18n();
+ const t=new URLSearchParams(location.search).get("t");if(t)manage(t);else slots()})();
+</script></body></html>
